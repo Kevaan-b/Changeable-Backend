@@ -1,0 +1,3 @@
+"""
+OCR processors package initializer.
+"""
