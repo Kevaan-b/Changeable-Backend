@@ -7,7 +7,6 @@ class TranslationController:
     def __init__(self):
         self.translation_service = TranslationService()
     
-    @api_bp.route('/translate/upload', methods=['POST'])
     def translate_upload(self):
         """Handle image upload and translation."""
     
