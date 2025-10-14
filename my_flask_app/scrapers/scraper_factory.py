@@ -11,6 +11,7 @@ class ScraperFactory:
             GenericScraper()  
         ]
     
-    def get_scraper(self, url):
-        """Get appropriate scraper for URL."""
+    def get_MangaDexScraper(self):
+        """Get MangaDex scraper."""
+        return self.scrapers[0]
        
