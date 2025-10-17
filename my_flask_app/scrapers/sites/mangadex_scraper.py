@@ -1,4 +1,4 @@
-from base_scraper import BaseScraper
+from my_flask_app.scrapers.sites.base_scraper import BaseScraper
 import requests
 class MangadexScraper(BaseScraper):
 
