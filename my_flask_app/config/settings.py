@@ -35,27 +35,3 @@ class Config:
 
     # Typesetting Configuration
     TYPESETTER_ENGINE = os.getenv('TYPESETTER_ENGINE', 'opencv')
-
-    # OpenCV Typesetting Settings
-    INPAINT_METHOD = os.getenv('INPAINT_METHOD', 'INPAINT_TELEA')  # or 'INPAINT_NS'
-    INPAINT_RADIUS = int(os.getenv('INPAINT_RADIUS', '3'))
-    FONT_SIZE_MULTIPLIER = float(os.getenv('FONT_SIZE_MULTIPLIER', '1.0'))
-    TEXT_PADDING = int(os.getenv('TEXT_PADDING', '5'))
-    BACKGROUND_EXPAND = int(os.getenv('BACKGROUND_EXPAND', '2'))
-
-    # Font Settings
-    DEFAULT_FONT_PATH = os.getenv('DEFAULT_FONT_PATH', '/System/Fonts/Arial.ttf')
-    MIN_FONT_SIZE = int(os.getenv('MIN_FONT_SIZE', '12'))
-    MAX_FONT_SIZE = int(os.getenv('MAX_FONT_SIZE', '72'))
-    MIN_TRANSLATION_CONFIDENCE = float(os.getenv('MIN_TRANSLATION_CONFIDENCE', '0.3'))
-
-    # Text Appearance
-    TEXT_COLOR = tuple(map(int, os.getenv('TEXT_COLOR', '0,0,0').split(',')))  # Black
-    TEXT_OUTLINE_COLOR = tuple(map(int, os.getenv('TEXT_OUTLINE_COLOR', '255,255,255').split(',')))  # White
-    TEXT_BACKGROUND_COLOR = tuple(map(int, os.getenv('TEXT_BACKGROUND_COLOR', '255,255,255,200').split(',')))  # Semi-transparent white
-    TEXT_OUTLINE_WIDTH = int(os.getenv('TEXT_OUTLINE_WIDTH', '1'))
-    BACKGROUND_THRESHOLD = float(os.getenv('BACKGROUND_THRESHOLD', '30.0'))
-
-    
-  
-

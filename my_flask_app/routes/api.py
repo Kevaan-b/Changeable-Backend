@@ -35,7 +35,7 @@ class TranslationController:
         - chapter_url: str (required)
         - language: str (required)
         - site: str (required)
-        Returns: CBZ (ZIP) containing all translated pages as 001.png, 002.png, ...
+        Returns: ZIP containing all translated pages as 001.png, 002.png, ...
         """
         payload = request.get_json(silent=True) or {}
         chapter_url = payload.get("chapter_url")

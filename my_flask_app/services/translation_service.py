@@ -28,7 +28,7 @@ class TranslationService:
         self.translator = GeminiTranslator()
         # self.typesetter = OpenCVTypesetter() (To be implemented in future)
 
-    def process_upload(self, files, source_lang: str, target_lang: str):
+    def process_upload(self, files, source_lang: str, target_lang: str) -> dict:
         """
         Process uploaded images for translation.
         Args:
@@ -36,13 +36,11 @@ class TranslationService:
             source_lang: original language (e.g. 'ja')
             target_lang: target translation language (e.g. 'en')
         Returns:
-            dict: Results with translated images and metadata
+            Results with translated images and metadata
         """
         try:
-            # Convert file objects to image paths
             image_paths = []
             for file_obj in files:
-                # Save uploaded file to temporary location
                 temp_path = self._save_bytes_to_temp_file(file_obj.read())
                 image_paths.append(temp_path)
             
@@ -52,7 +50,7 @@ class TranslationService:
             logger.error(f"Upload processing failed: {e}")
             return {"error": str(e), "results": []}
 
-    def process_links(self, links: List[str], source_lang: str, target_lang: str):
+    def process_links(self, links: List[str], source_lang: str, target_lang: str) -> dict:
         """
         Process one or more chapter links (scrape + translate).
         Args:
@@ -60,7 +58,7 @@ class TranslationService:
             source_lang: original language
             target_lang: target translation language
         Returns:
-            dict: Results with translated images and metadata
+            Results with translated images and metadata
         """
         try:
             all_image_paths = []
@@ -79,7 +77,6 @@ class TranslationService:
                         response = requests.get(img_url, timeout=10)
                         response.raise_for_status()
                         
-                        # Save downloaded image to temp file
                         temp_path = self._save_bytes_to_temp_file(response.content)
                         all_image_paths.append(temp_path)
                         
@@ -92,7 +89,7 @@ class TranslationService:
             logger.error(f"Link processing failed: {e}")
             return {"error": str(e), "results": []}
 
-    def _process_images(self, image_paths: List[str], source_lang: str, target_lang: str):
+    def _process_images(self, image_paths: List[str], source_lang: str, target_lang: str) -> dict:
         """
         Core image processing pipeline.
         1. OCR ->  2. Translate -> 3. Typeset
@@ -101,7 +98,7 @@ class TranslationService:
             source_lang: original language
             target_lang: target translation language
         Returns:
-            dict: Results with translated images and metadata
+            Results with translated images and metadata
         """
         results = []
         
@@ -109,7 +106,6 @@ class TranslationService:
             try:
                 logger.info(f"[Page {idx}/{len(image_paths)}] Processing {image_path}")
                 
-                # Step 1: OCR - Extract text and bounding boxes
                 logger.info(f"[Page {idx}] Running OCR...")
                 ocr_results = self.ocr_processor.extract_text(image_path)
                 
@@ -127,7 +123,6 @@ class TranslationService:
 
                 logger.info(f"[Page {idx}] Detected {len(ocr_results)} text regions")
 
-                # Step 2: Translate extracted text
                 logger.info(f"[Page {idx}] Translating text...")
                 translated_data = self.translator.translate(
                     ocr_results, 
@@ -135,14 +130,9 @@ class TranslationService:
                     target_lang=target_lang
                 )
 
-                # Step 3: Typeset - Apply translations to image (To be implemented in future)
                 logger.info(f"[Page {idx}] Applying translations")
                 
                 processed_image_path = image_path
-                #processed_image_path = self.typesetter.apply_translation(
-                #    image_path, ocr_results, translated_data
-                #)
-
                 
 
                 # Convert processed image to bytes for response
@@ -175,7 +165,6 @@ class TranslationService:
 
         logger.info(f"Completed processing {len(image_paths)} pages")
         
-        # Calculate summary statistics
         successful_pages = len([r for r in results if r['status'] == 'success'])
         total_text_regions = sum(r.get('text_count', 0) for r in results)
         

@@ -22,7 +22,7 @@ class MangadexScraper(BaseScraper):
 
 
     def scrape(self, url: str) -> list[str]:
-        """Return an array of image links from the particular site"""
+        """Return an array of image links from the particular site (url)"""
 
         if not self.can_handle(url):
             return []
