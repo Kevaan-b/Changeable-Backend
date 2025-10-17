@@ -6,8 +6,8 @@ import cv2
 import numpy as np
 from typing import List, Dict, Tuple
 import logging
-from my_flask_app.processors.ocr.base_ocr import BaseOCR
-from my_flask_app.config.settings import Config
+from ocr.base_ocr import BaseOCR
+from config.settings import Config
 
 logger = logging.getLogger(__name__)
 

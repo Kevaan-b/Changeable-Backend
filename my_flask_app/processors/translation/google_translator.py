@@ -4,8 +4,8 @@ Google Translate fallback implementation.
 from google.cloud import translate_v2 as translate
 from typing import List, Dict
 import logging
-from my_flask_app.processors.translation.base_translator import BaseTranslator
-from my_flask_app.config.settings import Config
+from processors.translation.base_translator import BaseTranslator
+from config.settings import Config
 
 logger = logging.getLogger(__name__)
 

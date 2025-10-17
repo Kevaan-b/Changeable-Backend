@@ -2,7 +2,8 @@
 Abstract base class and factory for OCR processors.
 """
 from abc import ABC, abstractmethod
-from my_flask_app.config.settings import Config
+from config.settings import Config
+from ocr.easyocr_processor import EasyOCRProcessor
 
 class BaseOCR(ABC):
     """Abstract base class for OCR processors."""
@@ -21,7 +22,6 @@ class OCRFactory:
         ocr_type = Config.OCR_ENGINE
         
         if ocr_type == 'easyocr':
-            from my_flask_app.processors.ocr.easyocr_processor import EasyOCRProcessor
             return EasyOCRProcessor()
         else:
             raise ValueError(f"Unknown OCR engine: {ocr_type}")

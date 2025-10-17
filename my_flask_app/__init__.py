@@ -3,7 +3,7 @@ Flask application factory and configuration.
 """
 from flask import Flask
 #from routes.api import api_bp
-from my_flask_app.config.settings import Config
+from .config.settings import Config
 
 def create_app():
     """Create and configure Flask application."""

@@ -2,7 +2,9 @@
 Abstract base class and factory for translation processors.
 """
 from abc import ABC, abstractmethod
-from my_flask_app.config.settings import Config
+from config.settings import Config
+from processors.translation.gemini_translator import GeminiTranslator
+from processors.translation.google_translator import GoogleTranslator
 
 class BaseTranslator(ABC):
     """Abstract base class for translation processors."""
@@ -22,10 +24,8 @@ class TranslatorFactory:
         
         try:
             if translator_type == 'gemini':
-                from my_flask_app.processors.translation.gemini_translator import GeminiTranslator
                 return GeminiTranslator()
             elif translator_type == 'google':
-                from my_flask_app.processors.translation.google_translator import GoogleTranslator
                 return GoogleTranslator()
             else:
                 raise ValueError(f"Unknown translator: {translator_type}")
@@ -34,7 +34,6 @@ class TranslatorFactory:
             if fallback and translator_type != 'google':
                 # Fallback to Google Translate
                 try:
-                    from my_flask_app.processors.translation.google_translator import GoogleTranslator
                     return GoogleTranslator()
                 except Exception:
                     pass

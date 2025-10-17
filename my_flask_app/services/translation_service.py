@@ -14,7 +14,6 @@ from PIL import Image
 from scrapers.scraper_factory import ScraperFactory
 from processors.ocr.easyocr_processor import EasyOCRProcessor
 from processors.translation.gemini_translator import GeminiTranslator
-from processors.typesetting.opencv_typesetter import OpenCVTypesetter
 
 logger = logging.getLogger(__name__)
 

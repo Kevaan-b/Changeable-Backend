@@ -6,8 +6,8 @@ from typing import List, Dict
 import json
 import logging
 import time
-from my_flask_app.processors.translation.base_translator import BaseTranslator
-from my_flask_app.config.settings import Config
+from processors.translation.base_translator import BaseTranslator
+from config.settings import Config
 
 logger = logging.getLogger(__name__)
 
