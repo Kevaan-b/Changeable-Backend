@@ -177,4 +177,4 @@ class TranslationService:
 
     def get_processing_status(self, task_id: str = None):
         """Get status of processing task (for future async implementation)."""
-        pass
+        raise NotImplementedError

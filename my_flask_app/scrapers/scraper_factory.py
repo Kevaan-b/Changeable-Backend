@@ -1,7 +1,7 @@
 """
 Factory for creating appropriate scrapers based on URL.
 """
-from sites.mangadex_scraper import MangadexScraper
+from scrapers.mangadex_scraper import MangadexScraper
 
 class ScraperFactory:
     """Factory for creating website scrapers."""

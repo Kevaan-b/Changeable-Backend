@@ -1,4 +1,4 @@
-from scrapers.sites.base_scraper import BaseScraper
+from scrapers.base_scraper import BaseScraper
 import requests
 class MangadexScraper(BaseScraper):
 
