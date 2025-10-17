@@ -1,0 +1,3 @@
+"""
+Scraper sites package initializer.
+"""

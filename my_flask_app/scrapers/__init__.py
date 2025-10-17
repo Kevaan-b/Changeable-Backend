@@ -1,0 +1,3 @@
+"""
+scrappers package initializer.
+"""
