@@ -2,12 +2,8 @@
 Google Translate fallback implementation.
 """
 from google.cloud import translate_v2 as translate
-from typing import List, Dict
-import logging
 from processors.translation.base_translator import BaseTranslator
 from config.settings import Config
-
-logger = logging.getLogger(__name__)
 
 class GoogleTranslator(BaseTranslator):
     """Translation processor using Google Translate API."""
@@ -18,14 +14,12 @@ class GoogleTranslator(BaseTranslator):
             self.client = translate.Client(
                 credentials=Config.GOOGLE_TRANSLATE_CREDENTIALS
             )
-            logger.info("Google Translator initialized successfully")
             
         except Exception as e:
-            logger.error(f"Failed to initialize Google Translator: {e}")
-            raise
+            raise e
     
-    def translate(self, text_data: List[Dict], source_lang: str, 
-                 target_lang: str) -> List[Dict]:
+    def translate(self, text_data: list[dict], source_lang: str, 
+                 target_lang: str) -> list[dict]:
         """
         Translate text data using Google Translate.
         
@@ -61,11 +55,9 @@ class GoogleTranslator(BaseTranslator):
                     'detected_language': result.get('detectedSourceLanguage', source_lang)
                 })
             
-            logger.info(f"Successfully translated {len(translated_data)} elements using Google Translate")
             return translated_data
             
         except Exception as e:
-            logger.error(f"Google Translate failed: {e}")
             # Return original data as fallback
             return [{**item, 'translated_text': item['text'], 'translation_confidence': 0.0} 
                    for item in text_data]
