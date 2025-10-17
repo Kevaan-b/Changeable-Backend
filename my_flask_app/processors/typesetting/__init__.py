@@ -1,3 +1,0 @@
-"""
-Typesetting processors package initializer.
-"""
