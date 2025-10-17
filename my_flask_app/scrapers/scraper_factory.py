@@ -9,7 +9,6 @@ class ScraperFactory:
     def __init__(self):
         self.scrapers = [
             MangadexScraper(),
-            # Add more scrapers here as needed
         ]
     
     def get_scraper(self, url: str):

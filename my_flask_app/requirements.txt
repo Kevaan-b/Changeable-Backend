@@ -1,4 +1,4 @@
-Flask
+fastapi[standard]
 requests
 easyocr
 google-generativeai
@@ -7,5 +7,3 @@ opencv-python
 numpy
 Pillow
 python-dotenv
-pytest
-pytest-flask

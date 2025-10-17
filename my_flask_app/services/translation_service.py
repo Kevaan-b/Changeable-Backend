@@ -3,7 +3,6 @@ Main business logic for translation processing.
 Handles upload and link-based translation.
 """
 import cv2
-import logging
 import requests
 import tempfile
 
@@ -16,11 +15,9 @@ class TranslationService:
     """Orchestrates the translation workflow."""
 
     def __init__(self):
-        # Initialize components directly
         self.scraper_factory = ScraperFactory()
         self.ocr_processor = EasyOCRProcessor()
         self.translator = GeminiTranslator()
-        # self.typesetter = OpenCVTypesetter() (To be implemented in future)
 
     def process_upload(self, files, source_lang: str, target_lang: str) -> dict:
         """
@@ -98,7 +95,7 @@ class TranslationService:
                     results.append({
                         'page_number': idx,
                         'original_image': image_path,
-                        'processed_image': image_path,  # Return original if no text
+                        'processed_image': image_path,  
                         'ocr_data': [],
                         'translation_data': [],
                         'status': 'no_text_detected'
@@ -113,17 +110,13 @@ class TranslationService:
                 )
 
                 
-                processed_image_path = image_path
-                
-
-                # Convert processed image to bytes for response
-                processed_image_bytes = self._image_path_to_bytes(processed_image_path)
+                image_bytes = self._image_path_to_bytes(image_path)
                 
                 results.append({
                     'page_number': idx,
                     'original_image': image_path,
-                    'processed_image': processed_image_path,
-                    'processed_image_bytes': processed_image_bytes,
+                    'processed_image': image_path,
+                    'processed_image_bytes': image_bytes,
                     'ocr_data': ocr_results,
                     'translation_data': translated_data,
                     'text_count': len(ocr_results),
@@ -135,7 +128,7 @@ class TranslationService:
                 results.append({
                     'page_number': idx,
                     'original_image': image_path,
-                    'processed_image': image_path,  # Fallback to original
+                    'processed_image': image_path,  
                     'ocr_data': [],
                     'translation_data': [],
                     'error': str(e),
@@ -161,12 +154,10 @@ class TranslationService:
     def _save_bytes_to_temp_file(self, image_bytes: bytes) -> str:
         """Save image bytes to a temporary file and return the path."""
         try:
-            # Create temporary file
             with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as temp_file:
                 temp_file.write(image_bytes)
                 temp_path = temp_file.name
             
-            # Verify the image is valid
             test_image = cv2.imread(temp_path)
             if test_image is None:
                 raise ValueError("Invalid image data")
