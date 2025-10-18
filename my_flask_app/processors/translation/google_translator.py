@@ -1,6 +1,3 @@
-"""
-Google Translate fallback implementation.
-"""
 from google.cloud import translate_v2 as translate
 from processors.translation.base_translator import BaseTranslator
 from config.settings import Config
@@ -35,29 +32,25 @@ class GoogleTranslator(BaseTranslator):
             return []
         
         try:
-            # Extract texts for translation
             texts = [item['text'] for item in text_data]
             
-            # Batch translate
             results = self.client.translate(
                 texts,
                 source_language=source_lang,
                 target_language=target_lang
             )
             
-            # Merge results with original data
             translated_data = []
             for i, (original, result) in enumerate(zip(text_data, results)):
                 translated_data.append({
                     **original,
                     'translated_text': result['translatedText'],
-                    'translation_confidence': 0.8,  # Google Translate is reliable
+                    'translation_confidence': 0.8, 
                     'detected_language': result.get('detectedSourceLanguage', source_lang)
                 })
             
             return translated_data
             
         except Exception as e:
-            # Return original data as fallback
             return [{**item, 'translated_text': item['text'], 'translation_confidence': 0.0} 
                    for item in text_data]

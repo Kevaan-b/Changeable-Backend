@@ -1,6 +1,3 @@
-"""
-Gemini-based translation implementation.
-"""
 import google.generativeai as genai
 import json
 import time
@@ -110,7 +107,7 @@ class GeminiTranslator(BaseTranslator):
                 last_error = e
 
                 if attempt < self.max_retries - 1:
-                    time.sleep(self.retry_delay * (2**attempt))  # Exponential backoff
+                    time.sleep(self.retry_delay * (2**attempt)) 
 
         raise last_error
 

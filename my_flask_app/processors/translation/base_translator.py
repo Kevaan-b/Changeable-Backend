@@ -1,6 +1,3 @@
-"""
-Base class and factory for translation processors.
-"""
 from abc import ABC
 
 class BaseTranslator(ABC):

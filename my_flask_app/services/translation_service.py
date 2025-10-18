@@ -2,6 +2,7 @@
 Main business logic for translation processing.
 Handles upload and link-based translation.
 """
+
 import cv2
 import requests
 import tempfile

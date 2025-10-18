@@ -1,6 +1,3 @@
-"""
-Base class and factory for OCR processors.
-"""
 from abc import ABC 
 
 class BaseOCR(ABC):

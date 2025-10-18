@@ -1,6 +1,3 @@
-"""
-EasyOCR implementation for text extraction.
-"""
 import easyocr
 import cv2
 import numpy as np
