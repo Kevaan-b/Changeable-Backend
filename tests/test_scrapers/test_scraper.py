@@ -2,7 +2,7 @@
 Test scraper functionality.
 """
 import pytest
-from my_flask_app.scrapers.sites.mangadex_scraper import MangadexScraper
+from my_flask_app.scrapers.mangadex_scraper import MangadexScraper
 
 def test_mangadx_scraper_url_validation():
     """Test MangaDX URL validation."""
@@ -28,6 +28,5 @@ def test_mangadx_scraping():
         results = scraper.scrape(test_url)
         assert isinstance(results, list)
         print(results)
-        # Add more specific assertions based on expected results
     except Exception as e:
-        pytest.skip(f"Scraping test failed (network/API issue): {e}")
+        pytest.skip(f"Scraping test failed either network or API issue: {e}")

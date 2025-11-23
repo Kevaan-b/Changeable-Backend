@@ -2,8 +2,8 @@ import easyocr
 import cv2
 import numpy as np
 
-from ocr.base_ocr import BaseOCR
-from config.settings import Config
+from .base_ocr import BaseOCR
+from my_flask_app.config.settings import Config
 
 
 class EasyOCRProcessor(BaseOCR):

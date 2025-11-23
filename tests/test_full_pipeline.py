@@ -2,6 +2,7 @@
 End-to-end test: Scraper → OCR → Translation → Typesetting (+ metadata file)
 ⚠️ Requires internet, EasyOCR, and a valid Gemini API key.
 """
+import cv2
 import pytest
 import requests
 import warnings
@@ -9,7 +10,7 @@ import json
 from pathlib import Path
 from datetime import datetime
 
-from my_flask_app.scrapers.sites.mangadex_scraper import MangadexScraper
+from my_flask_app.scrapers.mangadex_scraper import MangadexScraper
 from my_flask_app.processors.ocr.easyocr_processor import EasyOCRProcessor
 from my_flask_app.processors.translation.gemini_translator import GeminiTranslator
 
@@ -39,7 +40,7 @@ def test_full_pipeline():
     output_image_path = output_dir / "page3_translated.png"
     metadata_path = output_dir / "metadata.json"
 
-    # -------------------- Step 1: Scrape --------------------
+    # scrape
     try:
         image_urls = scraper.scrape(test_url)
         assert image_urls, "No images scraped."
@@ -48,7 +49,7 @@ def test_full_pipeline():
         pytest.skip(f" Scraper failed: {e}")
         return
 
-    # -------------------- Step 2: Download Image --------------------
+    # get image
     try:
         resp = requests.get(image_urls[2], timeout=10)
         resp.raise_for_status()
@@ -58,7 +59,7 @@ def test_full_pipeline():
         pytest.skip(f"Image download failed: {e}")
         return
 
-    # -------------------- Step 3: OCR --------------------
+    # use OCR
     try:
         ocr_data = ocr.extract_text(str(img_path))
         assert isinstance(ocr_data, list)
@@ -71,7 +72,7 @@ def test_full_pipeline():
         pytest.skip("No text detected; skipping translation/typesetting.")
         return
 
-    # -------------------- Step 4: Translation --------------------
+    # translate
     try:
         translated_data = translator.translate(ocr_data, "kr", "en", model_type="fast")
         assert isinstance(translated_data, list)
@@ -81,7 +82,7 @@ def test_full_pipeline():
         return
 
 
-    # -------------------- Step 6: Metadata Writing --------------------
+    # write metadata
     def to_serializable(obj):
         """Convert numpy/int32 types to Python int."""
         if isinstance(obj, (int, float, str, bool)) or obj is None:
@@ -116,7 +117,6 @@ def test_full_pipeline():
 
 
     try:
-        import cv2
         result = cv2.imread(str(output_image_path))
         assert result is not None, "Final output image could not be read."
         print(f"Verified output image integrity ({result.shape[1]}x{result.shape[0]}).")

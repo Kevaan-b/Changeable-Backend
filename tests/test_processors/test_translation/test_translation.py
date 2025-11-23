@@ -49,7 +49,7 @@ def test_gemini_translation(monkeypatch):
 @pytest.mark.integration
 def test_gemini_translation_real(monkeypatch):
     """
-    ⚠️ Real-world test that calls Gemini API.
+    Real-world test that calls Gemini API.
     Requires valid GEMINI_API_KEY in environment/config.
     """
     translator = GeminiTranslator()
@@ -65,6 +65,6 @@ def test_gemini_translation_real(monkeypatch):
         assert len(results) == len(sample_data)
         for item in results:
             assert "translated_text" in item
-            print(f"✅ {item['text']} → {item['translated_text']}")
+            print(f"{item['text']} → {item['translated_text']}")
     except Exception as e:
         pytest.skip(f"Real Gemini translation test failed: {e}")

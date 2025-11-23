@@ -1,8 +1,8 @@
 import google.generativeai as genai
 import json
 import time
-from processors.translation.base_translator import BaseTranslator
-from config.settings import Config
+from my_flask_app.processors.translation.base_translator import BaseTranslator
+from my_flask_app.config.settings import Config
 
 
 class GeminiTranslator(BaseTranslator):

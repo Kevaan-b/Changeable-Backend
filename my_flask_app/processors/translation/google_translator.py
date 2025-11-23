@@ -1,5 +1,5 @@
 from google.cloud import translate_v2 as translate
-from processors.translation.base_translator import BaseTranslator
+from my_flask_app.processors.translation.base_translator import BaseTranslator
 from config.settings import Config
 
 class GoogleTranslator(BaseTranslator):
