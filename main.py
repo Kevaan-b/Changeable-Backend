@@ -16,6 +16,7 @@ load_dotenv()
 
 app = FastAPI()
 
+os.makedirs("uploads", exist_ok=True)
 app.mount('/pages', StaticFiles(directory='uploads'), name='pages')
 
 app.add_middleware(
