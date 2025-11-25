@@ -16,3 +16,6 @@ class BaseScraper(ABC):
         """Scrape images from the given URL."""
         raise NotImplementedError
 
+    def get_id(self, url):
+        """Identify a unique idea for the chapter link"""
+        raise NotImplementedError

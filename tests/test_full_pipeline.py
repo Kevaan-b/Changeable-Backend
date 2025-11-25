@@ -1,6 +1,6 @@
 """
-End-to-end test: Scraper → OCR → Translation → Typesetting (+ metadata file)
-⚠️ Requires internet, EasyOCR, and a valid Gemini API key.
+End-to-end test: Scrape MangaDex -> Run OCR -> Translate -> Typeset -> Save metadata in project folder.
+Requires internet, EasyOCR, and a valid Gemini API key.
 """
 import cv2
 import pytest
@@ -24,7 +24,7 @@ warnings.filterwarnings("ignore", message="'mode' parameter is deprecated", modu
 @pytest.mark.integration
 def test_full_pipeline():
     """
-    Full test: Scrape MangaDex → Run OCR → Translate → Typeset → Save metadata in project folder.
+    Full test: Scrape MangaDex -> Run OCR -> Translate -> Typeset -> Save metadata in project folder.
     """
     scraper = MangadexScraper()
     ocr = EasyOCRProcessor()
@@ -44,7 +44,7 @@ def test_full_pipeline():
     try:
         image_urls = scraper.scrape(test_url)
         assert image_urls, "No images scraped."
-        print(f" Scraped {len(image_urls)} image URLs.")
+        print(f"Scraped {len(image_urls)} image URLs.")
     except Exception as e:
         pytest.skip(f" Scraper failed: {e}")
         return
@@ -63,7 +63,7 @@ def test_full_pipeline():
     try:
         ocr_data = ocr.extract_text(str(img_path))
         assert isinstance(ocr_data, list)
-        print(f"✅ Extracted {len(ocr_data)} OCR text regions.")
+        print(f"Extracted {len(ocr_data)} OCR text regions.")
     except Exception as e:
         pytest.skip(f"OCR extraction failed: {e}")
         return
@@ -88,7 +88,7 @@ def test_full_pipeline():
         if isinstance(obj, (int, float, str, bool)) or obj is None:
             return obj
         if hasattr(obj, "item"):
-            return obj.item()  # handles numpy scalar
+            return obj.item()
         if isinstance(obj, dict):
             return {k: to_serializable(v) for k, v in obj.items()}
         if isinstance(obj, list):
@@ -109,7 +109,7 @@ def test_full_pipeline():
         }
 
         metadata_path.write_text(json.dumps(metadata, indent=2, ensure_ascii=False))
-        print(f"Metadata written → {metadata_path}")
+        print(f"Metadata written -> {metadata_path}")
 
     except Exception as e:
         print(f" Failed to write metadata: {e}")
@@ -119,7 +119,7 @@ def test_full_pipeline():
     try:
         result = cv2.imread(str(output_image_path))
         assert result is not None, "Final output image could not be read."
-        print(f"Verified output image integrity ({result.shape[1]}x{result.shape[0]}).")
+        print(f"Verified output image ({result.shape[1]}x{result.shape[0]}).")
     except Exception as e:
         pytest.skip(f"Validation failed: {e}")
 

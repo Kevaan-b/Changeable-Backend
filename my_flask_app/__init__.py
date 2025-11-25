@@ -1,0 +1,1 @@
+"""The flask app module"""

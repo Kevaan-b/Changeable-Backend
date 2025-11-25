@@ -1,7 +1,7 @@
 """
 Factory for creating appropriate scrapers based on URL.
 """
-from .mangadex_scraper import MangadexScraper
+from my_flask_app.scrapers.mangadex_scraper import MangadexScraper
 
 class ScraperFactory:
     """Factory for creating website scrapers."""

@@ -3,13 +3,13 @@ from google.oauth2 import service_account
 
 class Config:
     """Configuration class for the application."""
-    
+
     # EasyOCR Configuration
-    EASYOCR_LANGUAGES = ['en', 'ko']  # Add languages as needed
+    EASYOCR_LANGUAGES = []  # Add languages as needed
     USE_GPU_OCR = os.getenv('USE_GPU_OCR', 'false').lower() == 'true'
     OCR_CONFIDENCE_THRESHOLD = float(os.getenv('OCR_CONFIDENCE_THRESHOLD', '0.6'))
     OCR_ENHANCE_IMAGE = os.getenv('OCR_ENHANCE_IMAGE', 'true').lower() == 'true'
-    
+        
     # Gemini Configuration
     GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
     GEMINI_FLASH_MODEL = os.getenv('GEMINI_FLASH_MODEL', 'gemini-2.5-flash')
@@ -32,3 +32,5 @@ class Config:
 
     # Typesetting Configuration
     TYPESETTER_ENGINE = os.getenv('TYPESETTER_ENGINE', 'opencv')
+
+    TRANSLATION_CONTEXT_PATH = "storage/translation_context.json"
